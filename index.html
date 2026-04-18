@@ -3,32 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShineLee's AI Lab</title>
+    <title>ShineLee's AI Lab | Protected</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: radial-gradient(circle at top right, #1e293b, #0f172a); min-height: 100vh; color: #f8fafc; font-family: sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 1.5rem; transition: 0.3s; }
-        .glass:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.08); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-        .btn { display: block; width: 100%; text-align: center; background: #3b82f6; color: white; padding: 0.5rem; border-radius: 0.75rem; margin-top: 1rem; }
+        body { background: radial-gradient(circle at top right, #1e293b, #0f172a); min-height: 100vh; color: #f8fafc; font-family: sans-serif; overflow: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 1.5rem; }
+        #authOverlay { position: fixed; inset: 0; background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 100; transition: 0.5s ease-out; }
+        .hidden-auth { transform: translateY(-100%); opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body class="p-8">
+    <!-- 密码锁界面 -->
+    <div id="authOverlay">
+        <div class="glass w-full max-w-sm text-center">
+            <h2 class="text-2xl font-bold mb-6 italic">ShineLee's AI Lab</h2>
+            <input type="password" id="passInput" placeholder="请输入访问密钥" 
+                   class="w-full bg-slate-900 border border-slate-700 py-3 px-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4 text-center">
+            <button onclick="checkPass()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold transition">解锁系统</button>
+            <p id="errMsg" class="text-red-400 mt-3 text-sm opacity-0 italic">密钥错误，请重试</p>
+        </div>
+    </div>
+
+    <!-- 主界面 -->
     <h1 class="text-4xl font-bold text-center mb-12">ShineLee's <span class="text-blue-400">AI Lab</span></h1>
-    <div id="repos" class="grid">正在连接 GitHub...</div>
+    <div id="repos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
     <script>
-        fetch('https://api.github.com/users/shinelee2014/repos?sort=updated&per_page=100')
-        .then(res => res.json())
-        .then(data => {
-            const container = document.getElementById('repos');
-            container.innerHTML = '';
-            data.filter(r => !r.fork && r.name !== 'shinelee2014.github.io').forEach(repo => {
-                const div = document.createElement('div');
-                div.className = 'glass';
-                div.innerHTML = '<h3>' + repo.name + '</h3><p class=\"text-sm text-slate-400\">' + (repo.description || '') + '</p><a class=\"btn\" href=\"https://shinelee2014.github.io/' + repo.name + '/\">打开工具</a>';
-                container.appendChild(div);
+        const USERNAME = 'shinelee2014';
+        const CORRECT_PASS = 'sean'; // 您的密钥
+
+        function checkPass() {
+            const val = document.getElementById('passInput').value;
+            if(val === CORRECT_PASS) {
+                document.getElementById('authOverlay').classList.add('hidden-auth');
+                localStorage.setItem('lab_auth', 'true');
+                fetchRepos();
+                document.body.style.overflow = 'auto';
+            } else {
+                const err = document.getElementById('errMsg');
+                err.style.opacity = '1';
+                setTimeout(() => { err.style.opacity = '0'; }, 2000);
+            }
+        }
+
+        // 自动检查已登录状态
+        if(localStorage.getItem('lab_auth') === 'true') {
+            document.getElementById('authOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            fetchRepos();
+        }
+
+        async function fetchRepos() {
+            const res = await fetch('https://api.github.com/users/' + USERNAME + '/repos?sort=updated&per_page=100');
+            const repos = await res.json();
+            const grid = document.getElementById('repos');
+            grid.innerHTML = '';
+            repos.filter(r => !r.fork && r.name !== USERNAME + '.github.io').forEach(repo => {
+                const card = document.createElement('div');
+                card.className = 'glass';
+                card.innerHTML = '<h3 class=\"text-xl font-bold mb-2\">' + repo.name + '</h3><p class=\"text-sm text-slate-400 mb-6\">' + (repo.description || 'AI 实验室项目') + '</p><a target=\"_blank\" href=\"https://shinelee2014.github.io/' + repo.name + '/\" class=\"block w-full text-center bg-blue-600/20 text-blue-400 py-2 rounded-xl hover:bg-blue-600/40\">立即打开</a>';
+                grid.appendChild(card);
             });
-        });
+        }
     </script>
 </body>
 </html>
