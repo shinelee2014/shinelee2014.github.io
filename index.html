@@ -7,17 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: radial-gradient(circle at top right, #1e293b, #0f172a); min-height: 100vh; color: #f8fafc; font-family: sans-serif; overflow-x: hidden; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 1.5rem; transition: 0.3s transform; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 1.5rem; border-radius: 1.5rem; transition: 0.3s; }
         .glass:hover { transform: translateY(-4px); background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); }
     </style>
 </head>
 <body class="p-8">
-    <!-- 密码锁逻辑 -->
     <div id="authOverlay" style="position:fixed; inset:0; background:#0f172a; z-index:100; display:flex; align-items:center; justify-content:center;">
         <div class="glass w-full max-w-sm text-center">
             <h2 class="text-2xl font-bold mb-6 italic text-blue-400">ShineLee's AI Lab</h2>
-            <input type="password" id="passInput" placeholder="输入密钥解锁" class="w-full bg-slate-900 border border-slate-700 py-3 rounded-xl mb-4 text-center text-white">
-            <button onclick="checkPass()" class="w-full bg-blue-600 py-3 rounded-xl font-bold">立即解锁</button>
+            <input type="password" id="passInput" placeholder="输入密钥解锁" class="w-full bg-slate-900 border border-slate-700 py-3 rounded-xl mb-4 text-center text-white focus:ring-2 focus:ring-blue-500 outline-none">
+            <button onclick="checkPass()" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold transition">立即解锁</button>
         </div>
     </div>
 
@@ -30,10 +29,13 @@
         const CORRECT_PASS = 'sean';
 
         function checkPass() {
-            if(document.getElementById('passInput').value === CORRECT_PASS) {
+            const input = document.getElementById('passInput').value;
+            if(input === CORRECT_PASS) {
                 document.getElementById('authOverlay').style.display = 'none';
                 localStorage.setItem('lab_auth', 'true');
                 fetchRepos();
+            } else {
+                alert('密码错误');
             }
         }
 
@@ -44,29 +46,30 @@
 
         async function fetchRepos() {
             try {
-                // 增加参数获取所有仓库，包含 has_pages 字段
-                const res = await fetch('https://api.github.com/users/' + USERNAME + '/repos?sort=updated&per_page=100');
+                const res = await fetch(`https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`);
                 const repos = await res.json();
                 const grid = document.getElementById('repos');
                 grid.innerHTML = '';
                 
-                // 核心过滤规则：必须有 Pages 服务，且不是主页自身
-                repos.filter(r => r.has_pages && r.name !== USERNAME + '.github.io').forEach(repo => {
+                // 仅展示开通了 Pages 的公开仓库
+                const filtered = repos.filter(r => r.has_pages && r.name !== USERNAME + '.github.io');
+                
+                filtered.forEach(repo => {
                     const card = document.createElement('div');
                     card.className = 'glass flex flex-col justify-between';
-                    card.innerHTML = 
+                    card.innerHTML = `
                         <div>
-                            <h3 class="text-xl font-bold mb-2 text-slate-100 italic"></h3>
-                            <p class="text-sm text-slate-400 mb-6 leading-relaxed"></p>
+                            <h3 class="text-xl font-bold mb-2 text-slate-100 italic">${repo.name}</h3>
+                            <p class="text-sm text-slate-400 mb-6 leading-relaxed">${repo.description || '在线 AI 服务已就绪'}</p>
                         </div>
-                        <a target="_blank" href="https://.github.io//" 
+                        <a target="_blank" href="https://${USERNAME}.github.io/${repo.name}/" 
                            class="block w-full text-center bg-blue-600/10 text-blue-400 py-3 rounded-xl font-bold border border-blue-500/20 hover:bg-blue-600 hover:text-white transition-all">
                            立即访问
                         </a>
-                    ;
+                    `;
                     grid.appendChild(card);
                 });
-            } catch(e) { console.error('API Error:', e); }
+            } catch(e) { console.error(e); }
         }
     </script>
 </body>
