@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShineLee's AI Lab | Deployed Tools</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      background:
+        radial-gradient(120% 120% at 50% 0%, #1a1a2e 0%, #0d0d14 55%, #050507 100%);
+      min-height: 100vh;
+      color: #f8fafc;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+        "PingFang SC", "Microsoft YaHei", sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ---- Full-screen looping background video ---- */
+    #bgVideo {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.1);
+      z-index: 0;
+      opacity: 0;
+    }
+    .video-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(120% 120% at 50% 0%, rgba(0,0,0,0.15), rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.82) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+    }
+
+    /* ---- Liquid glass (masked gradient border) ---- */
+    .liquid-glass {
+      background: rgba(255, 255, 255, 0.01);
+      background-blend-mode: luminosity;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.45) 0%,
+        rgba(255, 255, 255, 0.15) 20%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0.15) 80%,
+        rgba(255, 255, 255, 0.45) 100%
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .serif { font-family: 'Instrument Serif', serif; }
+
+    /* ---- Back link ---- */
+    .back-link {
+      position: fixed;
+      top: 1.75rem;
+      left: 1.75rem;
+      z-index: 4;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: #fff;
+      text-decoration: none;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+      transition: opacity 0.3s ease;
+    }
+    .back-link:hover { opacity: 0.7; }
+
+    /* ---- Content layer ---- */
+    .content {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      padding: 6rem 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+    }
+    .page-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      line-height: 1.05;
+      text-align: center;
+      color: #fff;
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+    }
+    .page-sub {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.78);
+      margin: 0;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .grid {
+      width: 100%;
+      max-width: 72rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+      gap: 2rem;
+    }
+
+    /* ---- Repo cards ---- */
+    .repo-card {
+      padding: 1.5rem;
+      border-radius: 1.25rem;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 11rem;
+      height: 100%;
+    }
+    .repo-card > div { flex: 1 1 auto; }
+    .repo-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .repo-name {
+      font-size: 1.4rem;
+      font-style: italic;
+      color: #fff;
+      margin: 0 0 0.5rem;
+      font-weight: 400;
+    }
+    .repo-desc {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      margin: 0 0 1.25rem;
+    }
+    .repo-link {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      border-radius: 0.9rem;
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      text-decoration: none;
+      margin-top: auto;
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    }
+    .repo-link:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* ---- Auth gate ---- */
+    #authOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(8, 8, 10, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 24rem;
+      padding: 2rem;
+      border-radius: 1.5rem;
+      text-align: center;
+    }
+    .auth-title {
+      font-size: 1.9rem;
+      font-style: italic;
+      color: #fff;
+      margin: 0 0 1.5rem;
+      font-weight: 400;
+    }
+    .field {
+      width: 100%;
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.75rem 1rem;
+      border-radius: 0.9rem;
+      color: #fff;
+      text-align: center;
+      outline: none;
+      font-size: 0.95rem;
+    }
+    .field:focus {
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.6);
+      border-color: transparent;
+    }
+    .btn-primary {
+      width: 100%;
+      margin-top: 1rem;
+      background: #fff;
+      color: #0a0a0a;
+      font-weight: 600;
+      padding: 0.75rem 1rem;
+      border-radius: 0.9rem;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s ease;
+    }
+    .btn-primary:hover { background: rgba(255, 255, 255, 0.85); }
+  </style>
+</head>
+<body>
+  <video
+    id="bgVideo"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_115001_bcdaa3b4-03de-47e7-ad63-ae3e392c32d4.mp4"
+  ></video>
+  <div class="video-overlay"></div>
+
+  <a href="index.html" class="back-link serif">&larr; ShineLee</a>
+
+  <div id="authOverlay">
+    <div class="liquid-glass auth-card">
+      <h2 class="auth-title serif">ShineLee's AI Lab</h2>
+      <input type="password" id="passInput" placeholder="输入密钥解锁" class="field" />
+      <button onclick="checkPass()" class="btn-primary">立即解锁</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1 class="page-title serif">Deployed <span class="serif" style="font-style:italic">Tools</span></h1>
+    <p class="page-sub">已自动同步所有在线服务</p>
+    <div id="repos" class="grid"></div>
+  </div>
+
+  <script>
+    /* ============ Background video fade system (requestAnimationFrame) ============ */
+    (function () {
+      const video = document.getElementById('bgVideo');
+      let opacityRef = 0;
+      let fadeRef = null;
+      let fadedIn = false;
+
+      function fadeTo(target, duration) {
+        if (fadeRef !== null) cancelAnimationFrame(fadeRef);
+        const start = performance.now();
+        const startOpacity = opacityRef;
+        function animate(now) {
+          const elapsed = now - start;
+          const t = Math.min(elapsed / duration, 1);
+          const current = startOpacity + (target - startOpacity) * t;
+          opacityRef = current;
+          video.style.opacity = current;
+          if (t < 1) fadeRef = requestAnimationFrame(animate);
+          else fadeRef = null;
+        }
+        fadeRef = requestAnimationFrame(animate);
+      }
+
+      function watchdog() {
+        if (video.readyState >= 2 && !fadedIn) {
+          fadedIn = true;
+          fadeTo(1, 800);
+        }
+        requestAnimationFrame(watchdog);
+      }
+      requestAnimationFrame(watchdog);
+
+      function handleTimeUpdate() {
+        if (!video.duration) return;
+        const remaining = video.duration - video.currentTime;
+        if (remaining <= 0.55) fadeTo(0, 500);
+      }
+
+      function handleEnded() {
+        opacityRef = 0;
+        video.style.opacity = 0;
+        fadedIn = false;
+        setTimeout(function () {
+          video.currentTime = 0;
+          video.play().catch(function () {});
+          fadeTo(1, 800);
+        }, 100);
+      }
+
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      video.addEventListener('ended', handleEnded);
+      video.addEventListener('error', function () {
+        console.error('[bgVideo] failed to load — check the src URL / network:', video.error);
+      });
+
+      video.play().catch(function (e) {
+        console.warn('[bgVideo] autoplay blocked, retrying on first interaction:', e);
+        const retry = function () {
+          video.play().catch(function () {});
+          window.removeEventListener('click', retry);
+          window.removeEventListener('touchstart', retry);
+        };
+        window.addEventListener('click', retry);
+        window.addEventListener('touchstart', retry);
+      });
+    })();
+
+    /* ============ Auth gate + deployed-tools grid ============ */
+    const USERNAME = 'shinelee2014';
+    const CORRECT_PASS = 'sean';
+
+    function checkPass() {
+      const input = document.getElementById('passInput').value;
+      if (input === CORRECT_PASS) {
+        document.getElementById('authOverlay').style.display = 'none';
+        localStorage.setItem('lab_auth', 'true');
+        fetchRepos();
+      } else {
+        alert('密码错误');
+      }
+    }
+
+    if (localStorage.getItem('lab_auth') === 'true') {
+      document.getElementById('authOverlay').style.display = 'none';
+      fetchRepos();
+    }
+
+    async function fetchRepos() {
+      try {
+        const res = await fetch(
+          `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`
+        );
+        const repos = await res.json();
+        const grid = document.getElementById('repos');
+        grid.innerHTML = '';
+
+        const filtered = repos.filter(
+          (r) => r.has_pages && r.name !== USERNAME + '.github.io'
+        );
+
+        filtered.forEach((repo) => {
+          const card = document.createElement('div');
+          card.className = 'liquid-glass repo-card';
+          card.innerHTML = `
+            <div>
+              <h3 class="repo-name serif">${repo.name}</h3>
+              <p class="repo-desc">${repo.description || '在线 AI 服务已就绪'}</p>
+            </div>
+            <a target="_blank" href="https://${USERNAME}.github.io/${repo.name}/" class="repo-link">
+              立即访问
+            </a>
+          `;
+          grid.appendChild(card);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  </script>
+</body>
+</html>
