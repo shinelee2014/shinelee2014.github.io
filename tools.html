@@ -242,6 +242,7 @@
   <video
     id="bgVideo"
     autoplay
+    loop
     muted
     playsinline
     preload="auto"
@@ -298,25 +299,6 @@
       }
       requestAnimationFrame(watchdog);
 
-      function handleTimeUpdate() {
-        if (!video.duration) return;
-        const remaining = video.duration - video.currentTime;
-        if (remaining <= 0.55) fadeTo(0, 500);
-      }
-
-      function handleEnded() {
-        opacityRef = 0;
-        video.style.opacity = 0;
-        fadedIn = false;
-        setTimeout(function () {
-          video.currentTime = 0;
-          video.play().catch(function () {});
-          fadeTo(1, 800);
-        }, 100);
-      }
-
-      video.addEventListener('timeupdate', handleTimeUpdate);
-      video.addEventListener('ended', handleEnded);
       video.addEventListener('error', function () {
         console.error('[bgVideo] failed to load — check the src URL / network:', video.error);
       });
