@@ -11,7 +11,8 @@
     html, body { margin: 0; padding: 0; }
 
     body {
-      background: #000;
+      background:
+        radial-gradient(120% 120% at 50% 0%, #1a1a2e 0%, #0d0d14 55%, #050507 100%);
       min-height: 100vh;
       color: #f8fafc;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
@@ -215,6 +216,7 @@
 <body>
   <video
     id="bgVideo"
+    autoplay
     muted
     playsinline
     preload="auto"
@@ -261,8 +263,10 @@
         fadeRef = requestAnimationFrame(animate);
       }
 
-      function handlePlaying() {
-        if (!startedRef) startedRef = true;
+      // Fade IN — guarded so it only runs once on first start.
+      function fadeIn() {
+        if (startedRef) return;
+        startedRef = true;
         fadingOutRef = false;
         fadeTo(1, 500);
       }
@@ -287,25 +291,34 @@
         }, 100);
       }
 
-      // Only play (and thus fade in) while in the viewport.
-      const io = new IntersectionObserver(
-        function (entries) {
-          const entry = entries[0];
-          if (entry.isIntersecting) {
-            video.play().catch(function () {});
-          } else {
-            video.pause();
-            opacityRef = 0;
-            video.style.opacity = 0;
-          }
-        },
-        { threshold: 0.1 }
-      );
-      io.observe(video);
-
-      video.addEventListener('playing', handlePlaying);
+      // Multiple fade-in triggers so the video is visible as soon as it can render,
+      // regardless of which event the browser decides to fire.
+      video.addEventListener('playing', fadeIn);
+      video.addEventListener('canplay', fadeIn);
+      video.addEventListener('loadeddata', fadeIn);
+      video.addEventListener('error', function () {
+        console.error('[bgVideo] failed to load — check the src URL / network:', video.error);
+      });
       video.addEventListener('timeupdate', handleTimeUpdate);
       video.addEventListener('ended', handleEnded);
+
+      // Kick off playback immediately (muted autoplay is allowed by browsers).
+      video.play().catch(function (e) {
+        console.warn('[bgVideo] autoplay blocked, will retry on first interaction:', e);
+        const retry = function () {
+          video.play().catch(function () {});
+          window.removeEventListener('click', retry);
+          window.removeEventListener('touchstart', retry);
+        };
+        window.addEventListener('click', retry);
+        window.addEventListener('touchstart', retry);
+      });
+
+      // Safety net: if the events never fired but the video is actually decoded,
+      // force it visible after 2.5s instead of staying black forever.
+      setTimeout(function () {
+        if (!startedRef && video.readyState >= 2) fadeIn();
+      }, 2500);
     })();
 
     /* ============ Existing functionality: auth gate + deployed-tools grid ============ */
