@@ -27,7 +27,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.1);
       z-index: 0;
       opacity: 0; /* fade system controls this */
     }
@@ -91,7 +90,7 @@
       text-shadow: 0 1px 12px rgba(0, 0, 0, 0.6);
     }
 
-    /* ---- Centered cinematic hero ---- */
+    /* ---- Centered cinematic hero (text pinned to upper area like 5173) ---- */
     .hero {
       position: relative;
       z-index: 2;
@@ -102,7 +101,8 @@
       justify-content: center;
       text-align: center;
       padding: 2rem 1.5rem;
-      gap: 1.5rem;
+      gap: 1.25rem;
+      transform: translateY(-20%);
     }
     .hero-title {
       font-size: clamp(3rem, 9vw, 6.5rem);
@@ -186,23 +186,11 @@
   <main class="hero">
     <h1 class="hero-title serif">ShineLee's <span class="serif" style="font-style:italic">AI Lab</span></h1>
     <p class="hero-tagline serif">Where curiosity meets code.</p>
-    <a href="tools.html" class="liquid-glass enter-btn">
+    <a href="tools.html" class="enter-btn">
       Explore the lab
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </a>
   </main>
-
-  <nav class="social">
-    <a href="#" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-    </a>
-    <a href="#" aria-label="Twitter">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-    </a>
-    <a href="#" aria-label="Website">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-    </a>
-  </nav>
 
   <script>
     /* ============ Background video fade system (requestAnimationFrame) ============ */
