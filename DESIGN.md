@@ -31,13 +31,15 @@
   - Captions: `0.85rem`
 
 ## 4. Materials & Physics
-- **Liquid Glass**:
-  - `backdrop-filter: blur(10px)`
-  - Dual masked gradient border: `rgba(255, 255, 255, 0.45)` to transparent.
-  - Inset specular highlight: `inset 0 1px 1px rgba(255, 255, 255, 0.12)`
+- **Liquid Glass (Hyalite Physical Refraction)**:
+  - Powered by `hyalite.js` (SDF Lens Map + Two-pass SVG Displacement).
+  - CSS hook: `backdrop-filter: var(--hyalite, blur(10px))` with graceful progressive fallback.
+  - Optical parameters: `thickness: 14~15px`, `bevel: 22~24px`, `blur: 1px`, `dispersion: 0.08`, `rim: 0.42~0.45`.
+  - Inset specular highlights: `inset 0 1px 0 rgba(255, 255, 255, 0.45)` for precision crystal edge.
 - **Transitions**:
   - Natural easing: `cubic-bezier(0.16, 1, 0.3, 1)`
   - Standard duration: `200ms` - `300ms`
+  - WWDC25 Materialize curve: `400ms` - `450ms` (curvature ramps up on mount)
 
 ## 5. Accessibility (A11y)
 - Must respect `prefers-reduced-motion: reduce` by suppressing autoplay video and heavy translation transforms.

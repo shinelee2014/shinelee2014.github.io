@@ -6,6 +6,7 @@
   <meta name="description" content="ShineLee's AI Lab - Where curiosity meets code." />
   <meta name="theme-color" content="#0d0d14" />
   <title>ShineLee's AI Lab</title>
+  <script src="hyalite.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
 
@@ -34,38 +35,20 @@
       transition: opacity 0.8s ease;
     }
 
-    /* ---- Liquid glass (masked gradient border) ---- */
+    /* ---- Real Refraction Liquid Glass (Hyalite Engine) ---- */
     .liquid-glass {
-      background: rgba(255, 255, 255, 0.02);
-      background-blend-mode: luminosity;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: none;
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+      background: rgba(13, 14, 22, 0.38);
+      backdrop-filter: var(--hyalite, blur(8px));
+      -webkit-backdrop-filter: var(--hyalite, blur(8px));
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.45),
+                  inset 0 -1px 0 rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
-    }
-    .liquid-glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1.4px;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.45) 0%,
-        rgba(255, 255, 255, 0.15) 20%,
-        rgba(255, 255, 255, 0) 40%,
-        rgba(255, 255, 255, 0) 60%,
-        rgba(255, 255, 255, 0.15) 80%,
-        rgba(255, 255, 255, 0.45) 100%
-      );
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s ease,
+                  background 0.3s ease;
     }
 
     .serif { font-family: 'Instrument Serif', serif; }
@@ -230,6 +213,20 @@
         window.addEventListener('touchstart', retry);
       });
     })();
+
+    /* ============ Activate Hyalite Real Optical Refraction ============ */
+    if (window.Hyalite) {
+      Hyalite.watch(document.body, '.enter-btn, .liquid-glass', {
+        bevel: 24,       // 24px 倒角宽度
+        thickness: 15,   // 15px 玻璃厚度，产生充盈的向内拉扯偏折
+        blur: 1,         // 1px 中心微磨砂（文字极其清晰）
+        dispersion: 0.08,// 8% 三原色微色散
+        rim: 0.45,       // 0.45 几何高光
+        light: -145,     // 左下方逆光投射
+        smooth: 1,       // 开启两段式位移抗锯齿
+        materialize: 450 // 450ms 入场折射渐入动效
+      });
+    }
   </script>
 </body>
 </html>
