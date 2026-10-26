@@ -1,0 +1,146 @@
+[
+  {
+    "name": "jiangshan-map",
+    "description": "江山时序 · 中国历史交互地图时间轴 (403 BCE – Present) | Interactive Historical Atlas of China across 18 dynasties, 164 territory snapshots, ancient-to-modern place genealogy & classical poetry routes",
+    "url": "https://shinelee2014.github.io/jiangshan-map/",
+    "repo": "https://github.com/shinelee2014/jiangshan-map"
+  },
+  {
+    "name": "TypeWords",
+    "description": "Practice English, one strike, one step forward; 练习英语，一次敲击，一点进步；",
+    "url": "https://shinelee2014.github.io/TypeWords/",
+    "repo": "https://github.com/shinelee2014/TypeWords"
+  },
+  {
+    "name": "diagram-design",
+    "description": "Editorial diagram design for Claude Code, Codex, GitHub Copilot, Factory Droid, and Pi. 42 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
+    "url": "https://shinelee2014.github.io/diagram-design/",
+    "repo": "https://github.com/shinelee2014/diagram-design"
+  },
+  {
+    "name": "mathlearn-primary",
+    "description": "中小学数学公式概念可视化互动学习。小学数学版 (在线体验)：https://shinelee2014.github.io/mathlearn-primary/primary.html",
+    "url": "https://shinelee2014.github.io/mathlearn-primary/",
+    "repo": "https://github.com/shinelee2014/mathlearn-primary"
+  },
+  {
+    "name": "english-note",
+    "description": "从0开始学习英语语法",
+    "url": "https://shinelee2014.github.io/english-note/",
+    "repo": "https://github.com/shinelee2014/english-note"
+  },
+  {
+    "name": "math-mastery",
+    "description": "中小学数学方法融会贯通 · 纯前端零依赖 · 参数化随机出题引擎",
+    "url": "https://shinelee2014.github.io/math-mastery/",
+    "repo": "https://github.com/shinelee2014/math-mastery"
+  },
+  {
+    "name": "markdown-studio",
+    "description": "基于 Vditor 构建的现代高颜值在线 Markdown 阅读与编辑工作台，支持即时渲染、大纲、公式、图表与本地文件读写",
+    "url": "https://shinelee2014.github.io/markdown-studio/",
+    "repo": "https://github.com/shinelee2014/markdown-studio"
+  },
+  {
+    "name": "threeui",
+    "description": "Open-source ThreeUI Community catalog with live interactive components and complete Community source.",
+    "url": "https://shinelee2014.github.io/threeui/",
+    "repo": "https://github.com/shinelee2014/threeui"
+  },
+  {
+    "name": "watermark-studio-pro",
+    "description": "在线工具与实验项目。",
+    "url": "https://shinelee2014.github.io/watermark-studio-pro/",
+    "repo": "https://github.com/shinelee2014/watermark-studio-pro"
+  },
+  {
+    "name": "anydoc",
+    "description": "Convert Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and PDF to clean Markdown. Built in Rust, with Node.js and Python bindings.",
+    "url": "https://shinelee2014.github.io/anydoc/",
+    "repo": "https://github.com/shinelee2014/anydoc"
+  },
+  {
+    "name": "watermarks-remover",
+    "description": "Multi-vendor AI provenance and watermark remover with in-browser Web UI & Python stdlib service (Unicode, C2PA, EXIF, DOCX, PNG, PDF)",
+    "url": "https://shinelee2014.github.io/watermarks-remover/",
+    "repo": "https://github.com/shinelee2014/watermarks-remover"
+  },
+  {
+    "name": "ai-agent-book",
+    "description": "《深入理解 AI Agent：设计原理与工程实践》（李博杰 著）开源主仓库：全书正文、编译版 PDF 与按章配套代码",
+    "url": "https://shinelee2014.github.io/ai-agent-book/",
+    "repo": "https://github.com/shinelee2014/ai-agent-book"
+  },
+  {
+    "name": "up",
+    "description": "An advanced guide which might benefit you a lot 🎉 . 人生进阶指南 离谱的人生 离谱的英语学习指南/英语学习教程/英语学习/学英语",
+    "url": "https://shinelee2014.github.io/up/",
+    "repo": "https://github.com/shinelee2014/up"
+  },
+  {
+    "name": "english-word",
+    "description": "在线工具与实验项目。",
+    "url": "https://shinelee2014.github.io/english-word/",
+    "repo": "https://github.com/shinelee2014/english-word"
+  },
+  {
+    "name": "Marble3D",
+    "description": "在线工具与实验项目。",
+    "url": "https://shinelee2014.github.io/Marble3D/",
+    "repo": "https://github.com/shinelee2014/Marble3D"
+  },
+  {
+    "name": "listen-pick",
+    "description": "小学英语听句选图",
+    "url": "https://shinelee2014.github.io/listen-pick/",
+    "repo": "https://github.com/shinelee2014/listen-pick"
+  },
+  {
+    "name": "HowToCook",
+    "description": "基于 NanoBananaPro 将原版 Markdown 教程全量转化为精美菜谱图片，让厨房实操一目了然。",
+    "url": "https://shinelee2014.github.io/HowToCook/",
+    "repo": "https://github.com/shinelee2014/HowToCook"
+  },
+  {
+    "name": "gpt_image_playground",
+    "description": "基于 OpenAI gpt-image-2 API 的图片生成与编辑工具",
+    "url": "https://shinelee2014.github.io/gpt_image_playground/",
+    "repo": "https://github.com/shinelee2014/gpt_image_playground"
+  },
+  {
+    "name": "gpt4o-image-prompts",
+    "description": "Nano Banana(nanobanana),GPT-5(GPT5),GPT-4o(GPT4o) Image Prompts，Nanobanana Prompts，nanobanana提示词",
+    "url": "https://shinelee2014.github.io/gpt4o-image-prompts/",
+    "repo": "https://github.com/shinelee2014/gpt4o-image-prompts"
+  },
+  {
+    "name": "DictionaryByGPT4",
+    "description": "一本 GPT4 生成的单词书📚，超过 8000 个单词分析，涵盖了词义、例句、词根词缀、变形、文化背景、记忆技巧和小故事",
+    "url": "https://shinelee2014.github.io/DictionaryByGPT4/",
+    "repo": "https://github.com/shinelee2014/DictionaryByGPT4"
+  },
+  {
+    "name": "ppt-master",
+    "description": "AI generates natively editable PPTX from any document — real PowerPoint shapes, not images — no design skills needed",
+    "url": "https://shinelee2014.github.io/ppt-master/",
+    "repo": "https://github.com/shinelee2014/ppt-master"
+  },
+  {
+    "name": "universal-editor-markdown",
+    "description": "Markdown、Mermaid、Markmap通用型编辑器",
+    "url": "https://shinelee2014.github.io/universal-editor-markdown/",
+    "repo": "https://github.com/shinelee2014/universal-editor-markdown"
+  },
+  {
+    "name": "Information-Charts-prompt",
+    "description": "notebooklm Information-Charts-prompt",
+    "url": "https://shinelee2014.github.io/Information-Charts-prompt/",
+    "repo": "https://github.com/shinelee2014/Information-Charts-prompt"
+  },
+  {
+    "name": "remover-gemini",
+    "description": "移除Gemini 和 NotebookLM浮水印",
+    "url": "https://shinelee2014.github.io/remover-gemini/",
+    "repo": "https://github.com/shinelee2014/remover-gemini"
+  }
+]

@@ -1,46 +1,12 @@
-# DESIGN.md — ShineLee's AI Lab
+# ShineLee 个人入口设计
 
-## 1. Brand Identity & Register
-- **Register**: `Experience` (Digital AI Research Lab & Portal)
-- **Mood**: Cinematic, sleek, minimalist, dark luxury, physics-based liquid glass.
-- **Anti-References**: Avoid generic light dashboard cards, cartoon gradients, neon cyan glare, and standard Bootstrap-like rounded buttons.
+极简静态页面。米白背景、深绿强调色、系统中文字体与本地 Georgia 标题字体。
 
-## 2. Color Palette
-- **Background Deep Ramp**:
-  - Center: `#1a1a2e` (Deep Midnight Indigo)
-  - Middle: `#0d0d14` (Obsidian Base)
-  - Edge: `#050507` (Pitch Dark)
-- **Glass Surfaces**:
-  - Base: `rgba(13, 13, 20, 0.45)` (Tinted dark glass)
-  - Hover: `rgba(25, 25, 38, 0.6)` (Subtle luminous reaction)
-  - Auth Modal: `rgba(18, 18, 28, 0.7)`
-- **Text & Foreground**:
-  - Primary: `#ffffff` (Pure White, 100%)
-  - Secondary: `rgba(255, 255, 255, 0.82)` (WCAG AA pass on glass)
-  - Tertiary/Muted: `rgba(255, 255, 255, 0.65)`
-  - Error: `#f87171` (Red-400)
+- 首页：个人介绍与博客、工具箱、GitHub 三个入口。
+- 工具箱：静态工具目录与本地搜索，保留原有解锁入口与记忆状态。
+- overview.html：保留旧地址，使用与首页一致的轻量布局。
+- 禁止加载背景视频、在线字体、外部图标库或玻璃折射脚本。
+- 无构建框架；首页仅 HTML + 共享 CSS，工具页额外加载一个小型本地脚本。
+- 修改 data/projects.json 后运行 python scripts/build.py 更新静态页面。
 
-## 3. Typography
-- **Headings & Display**: `'Instrument Serif', Georgia, serif` (Editorial elegance, italic accents)
-- **Body & Controls**: `ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", sans-serif`
-- **Scale**:
-  - Display Hero: `clamp(2.2rem, 6vw, 3.8rem)` / `line-height: 1.05`
-  - Page Title: `clamp(2.5rem, 6vw, 4rem)`
-  - Card Title: `1.45rem` (Italic serif)
-  - Body / Sub: `0.9rem` - `1rem`
-  - Captions: `0.85rem`
-
-## 4. Materials & Physics
-- **Liquid Glass (Hyalite Physical Refraction)**:
-  - Powered by `hyalite.js` (SDF Lens Map + Two-pass SVG Displacement).
-  - CSS hook: `backdrop-filter: var(--hyalite, blur(10px))` with graceful progressive fallback.
-  - Optical parameters: `thickness: 14~15px`, `bevel: 22~24px`, `blur: 1px`, `dispersion: 0.08`, `rim: 0.42~0.45`.
-  - Inset specular highlights: `inset 0 1px 0 rgba(255, 255, 255, 0.45)` for precision crystal edge.
-- **Transitions**:
-  - Natural easing: `cubic-bezier(0.16, 1, 0.3, 1)`
-  - Standard duration: `200ms` - `300ms`
-  - WWDC25 Materialize curve: `400ms` - `450ms` (curvature ramps up on mount)
-
-## 5. Accessibility (A11y)
-- Must respect `prefers-reduced-motion: reduce` by suppressing autoplay video and heavy translation transforms.
-- All interactive elements must declare `:focus-visible` outline rings.
+客户端解锁仅保留原有交互，并非服务端鉴权；工具目录来自公开仓库，不应存放敏感数据。
