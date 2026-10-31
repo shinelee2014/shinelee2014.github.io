@@ -68,7 +68,7 @@
   {
     "name": "ai-agent-book",
     "description": "《深入理解 AI Agent：设计原理与工程实践》（李博杰 著）开源主仓库：全书正文、编译版 PDF 与按章配套代码",
-    "url": "https://shinelee2014.github.io/ai-agent-book/",
+    "url": "https://bojieli.github.io/ai-agent-book/astro/",
     "repo": "https://github.com/shinelee2014/ai-agent-book"
   },
   {
@@ -104,7 +104,7 @@
   {
     "name": "gpt_image_playground",
     "description": "基于 OpenAI gpt-image-2 API 的图片生成与编辑工具",
-    "url": "https://shinelee2014.github.io/gpt_image_playground/",
+    "url": "https://gptimageplayground-five.vercel.app/",
     "repo": "https://github.com/shinelee2014/gpt_image_playground"
   },
   {
