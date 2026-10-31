@@ -142,5 +142,11 @@
     "description": "移除Gemini 和 NotebookLM浮水印",
     "url": "https://shinelee2014.github.io/remover-gemini/",
     "repo": "https://github.com/shinelee2014/remover-gemini"
+  },
+  {
+    "name": "ebook-treasure-chest",
+    "description": "电子书下载宝库 · 汇聚24,000+本电子书资源，涵盖经典文学、经管励志、终身学习与技术手册，支持在线快速检索与多格式下载",
+    "url": "https://shinelee2014.github.io/ebook-treasure-chest/",
+    "repo": "https://github.com/shinelee2014/ebook-treasure-chest"
   }
 ]

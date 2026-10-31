@@ -1,0 +1,31 @@
+name: Auto Sync Toolbox
+
+on:
+  schedule:
+    - cron: '0 18 * * *' # 每天凌晨 2 点 (UTC+8) 自动巡检
+  workflow_dispatch:      # 支持在 GitHub Actions 页面手动一键触发
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run sync script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          python scripts/sync_tools.py --push
